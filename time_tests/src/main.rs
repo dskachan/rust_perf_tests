@@ -64,14 +64,18 @@ fn test_time_cost(amount :usize)->Result<()>{
     let mut v: Vec<u64> = Vec::new();
     v.reserve(amount);
     let start = time::precise_time_ns();
+    let mut sample_1:u64;
+    let mut sample_2:u64;
     for i in 1..amount {
-        v.push(time::precise_time_ns());
+        sample_1 =time::precise_time_ns();
+        sample_2 =time::precise_time_ns();
+        v.push(sample_2 - sample_1);
     }
     let end = time::precise_time_ns();
     let duration = end - start;
     println!("test time measurement");
     println!("test duration: {}",duration);
-    println!("duration per measurement: {}",duration/(amount as u64));
+    println!("duration per loop: {}",duration/(amount as u64));
     save_vect_to_file(v,Path::new("rust_test_time_cost.log"))
 }
 
